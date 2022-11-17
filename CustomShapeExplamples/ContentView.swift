@@ -21,10 +21,53 @@ struct Diagonal: Shape {
         return path
     }
 }
+
+struct Diamond: Shape {
+    func path(in rect: CGRect) -> Path {
+        
+        var path = Path()
+        
+        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+        path.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY))
+        path.addLine(to: CGPoint(x: rect.minX, y: rect.midY))
+        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        
+        return path
+    }
+}
+
+struct IDEK: Shape {
+    func path(in rect: CGRect) -> Path {
+        
+        var path = Path()
+        
+        for i in 1...10 {
+            var  factor = CGFloat(i)
+            
+            path.move(to: CGPoint(x: rect.midX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.maxX - factor, y: rect.midY - factor))
+            path.addLine(to: CGPoint(x: rect.midX - factor, y: rect.maxY - factor))
+            path.addLine(to: CGPoint(x: rect.minX - factor, y: rect.midY - factor))
+            path.addLine(to: CGPoint(x: rect.midX - factor, y: rect.minY - factor))
+        }
+        return path
+    }
+}
+
 struct ContentView: View {
     var body: some View {
-        Diagonal()
-            .stroke()
+        ZStack {
+            Diagonal()
+                .stroke()
+                .foregroundColor(.green)
+            Diamond()
+                .stroke()
+                .foregroundColor(.blue)
+            IDEK()
+                .stroke()
+                .foregroundColor(.black)
+        }
     }
 }
 
